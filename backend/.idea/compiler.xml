@@ -9,6 +9,7 @@
         <module name="user_service" />
         <module name="prescription_service" />
         <module name="appointment_service" />
+        <module name="review_service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -16,6 +17,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="appointment_service" options="-parameters" />
       <module name="prescription_service" options="-parameters" />
+      <module name="review_service" options="-parameters" />
       <module name="user_service" options="-parameters" />
     </option>
   </component>

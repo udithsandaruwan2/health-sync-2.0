@@ -16,5 +16,23 @@
     "rating": 4.0,
     "numReviews": 30,
     "consultationFee": 200
+  },
+  {
+    "_id": "3",
+    "name": "Dr. Jane Smith",
+    "image": "../src/assets/doctor.jpg",
+    "specialization": "Neurology",
+    "rating": 4.0,
+    "numReviews": 30,
+    "consultationFee": 200
+  },
+  {
+    "_id": "4",
+    "name": "Dr. Jane Smith",
+    "image": "../src/assets/doctor.jpg",
+    "specialization": "Neurology",
+    "rating": 4.0,
+    "numReviews": 30,
+    "consultationFee": 200
   }
 ]

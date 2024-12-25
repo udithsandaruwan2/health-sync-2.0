@@ -18,12 +18,12 @@ public class AppointmentController {
         return aptService.setAppointment(apt);
     }
 
-    @GetMapping(path = "appointments")
+    @GetMapping(path = "/appointments")
     public List<Appointment> getAppointment(){
         return aptService.getAppointment();
     }
 
-    @GetMapping(path = "appointments/", params = "date")
+    @GetMapping(path = "/appointments", params = "date")
     public List<Appointment> getAppointmentByDate(@RequestParam String date){
         return aptService.getAppointmentByDate(date);
     }
@@ -43,9 +43,6 @@ public class AppointmentController {
     public boolean cancelAppointment(@PathVariable int appointmentId) {
         return aptService.cancelAppointment(appointmentId);
     }
-
-
-
 
 
 }

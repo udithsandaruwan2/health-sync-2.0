@@ -28,7 +28,7 @@ public class AppointmentController {
         return aptService.getAppointmentByDate(date);
     }
 
-    @PutMapping(path = "/appointments/{appointmentId}/details")
+    @PutMapping(path = "/appointments/{appointmentId}")
     public Appointment updateAppointmentDetails(@PathVariable int appointmentId, @RequestBody Appointment updatedAppointment) {
         return aptService.updateAppointmentDetails(appointmentId, updatedAppointment);
     }

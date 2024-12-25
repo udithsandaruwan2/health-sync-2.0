@@ -23,8 +23,8 @@ public class AppointmentController {
         return aptService.getAppointment();
     }
 
-    /*@GetMapping(path = "appointments/", params = "date")
+    @GetMapping(path = "appointments/", params = "date")
     public List<Appointment> getAppointmentByDate(@RequestParam String date){
         return aptService.getAppointmentByDate(date);
-    }*/
+    }
 }

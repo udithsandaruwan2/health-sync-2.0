@@ -19,10 +19,10 @@ public class AppointmentService {
     }
 
     public List<Appointment> getAppointment(){
-        return aptRepo.findAll();// to get the list of student
+        return aptRepo.findAll();// to get the list of Appointments
     }
 
-    /*public List<Appointment> getAppointmentByDate(String date){
-        return aptRepo.findByDate(date);// to get the list of student
-    }*/
+    public List<Appointment> getAppointmentByDate(String date){
+        return aptRepo.findByDate(date);
+    }
 }

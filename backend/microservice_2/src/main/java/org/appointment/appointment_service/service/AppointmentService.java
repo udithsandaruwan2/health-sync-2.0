@@ -45,11 +45,17 @@ public class AppointmentService {
         return null;
     }
 
-    public List<Appointment> getUpcomingAppointments() {
+    /*public List<Appointment> getUpcomingAppointments() {
         // Get today's date
         LocalDate today = LocalDate.now();
         return aptRepo.findByAppointmentDateAfter(today);
-    }
+    }*/
+
+    /*public List<Appointment> getTodaysAppointments() {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+        return aptRepo.findAppointmentsByDate(today);
+    }*/
 
     public Appointment updateAppointmentDetails(int aptId, Appointment apt){
         Appointment existingAppointment = aptRepo.findById(aptId)

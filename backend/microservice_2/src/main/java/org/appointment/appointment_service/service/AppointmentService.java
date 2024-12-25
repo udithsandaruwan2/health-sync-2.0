@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AppointmentService {
@@ -93,7 +92,14 @@ public class AppointmentService {
         return aptRepo.findByStatus(status);
     }
 
-
+    // Method for Analytics
+    public Map<String, Object> getAppointmentAnalytics() {
+        Map<String, Object> analytics = new LinkedHashMap<>(); // LinkedHashMap to get the json output in order
+        analytics.put("totalAppointments", aptRepo.count());
+        analytics.put("accepteddAppointments", aptRepo.countByStatus("Accepted"));
+        analytics.put("pendingAppointments", aptRepo.countByStatus("Pending"));
+        return analytics;
+    }
 
 
 }

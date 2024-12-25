@@ -24,5 +24,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("SELECT a FROM Appointment a WHERE a.status = ?1")
     public List<Appointment> findByStatus(String status);
 
+    @Query("SELECT COUNT(a) FROM Appointment a WHERE a.status = ?1")
+    public int countByStatus(String status);
+
+
 
 }

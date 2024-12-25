@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class AppointmentController {
@@ -74,6 +75,11 @@ public class AppointmentController {
     @GetMapping(path = "/appointments/status/{status}")
     public List<Appointment> getAppointmentsByStatus(@PathVariable String status) {
         return aptService.getAppointmentsByStatus(status);
+    }
+
+    @GetMapping(path = "/analytics")
+    public Map<String, Object> getAppointmentAnalytics() {
+        return aptService.getAppointmentAnalytics();
     }
 
 

@@ -21,5 +21,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     /*@Query("select a from Appointment a where a.date = :date")
     public List<Appointment> findAppointmentsByDate(@Param("date") LocalDate date);*/
+    @Query("SELECT a FROM Appointment a WHERE a.status = ?1")
+    public List<Appointment> findByStatus(String status);
+
 
 }

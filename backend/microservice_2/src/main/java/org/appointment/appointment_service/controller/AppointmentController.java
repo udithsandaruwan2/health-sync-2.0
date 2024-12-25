@@ -70,5 +70,12 @@ public class AppointmentController {
         return aptService.cancelAppointment(appointmentId);
     }
 
+    //Filter appointments by status
+    @GetMapping(path = "/appointments/status/{status}")
+    public List<Appointment> getAppointmentsByStatus(@PathVariable String status) {
+        return aptService.getAppointmentsByStatus(status);
+    }
+
+
 
 }

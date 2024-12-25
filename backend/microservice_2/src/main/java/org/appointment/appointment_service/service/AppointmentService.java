@@ -89,6 +89,11 @@ public class AppointmentService {
         return false;
     }
 
+    public List<Appointment> getAppointmentsByStatus(String status) {
+        return aptRepo.findByStatus(status);
+    }
+
+
 
 
 }

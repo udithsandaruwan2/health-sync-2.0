@@ -28,10 +28,23 @@ public class AppointmentController {
         return aptService.getAppointmentByDate(date);
     }
 
-    @PutMapping(path = "/appointments/{appointmentId}")
+    @PutMapping(path = "/appointments/{appointmentId}/details")
     public Appointment updateAppointmentDetails(@PathVariable int appointmentId, @RequestBody Appointment updatedAppointment) {
         return aptService.updateAppointmentDetails(appointmentId, updatedAppointment);
     }
+
+    @PutMapping(path = "appointments/{id}/status")
+    public Appointment updateStatus(@PathVariable("id") int appointmentId, @RequestBody Appointment statusApt) {
+        return aptService.updateStatus(appointmentId, statusApt);
+    }
+
+
+    @DeleteMapping(path = "/appointments/{appointmentId}")
+    public boolean cancelAppointment(@PathVariable int appointmentId) {
+        return aptService.cancelAppointment(appointmentId);
+    }
+
+
 
 
 

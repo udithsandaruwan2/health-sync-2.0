@@ -46,5 +46,26 @@ public class AppointmentService {
         // Save the updated appointment to the database
         return aptRepo.save(existingAppointment);
     }
+
+    public Appointment updateStatus(int aptId, Appointment apt) {
+        Appointment existingAppointment = aptRepo.findById(aptId)
+                .orElseThrow(() -> new RuntimeException("Appointment not found with id " + aptId));
+
+        // Update the status of the existing appointment
+        existingAppointment.setStatus(apt.getStatus());
+
+        return aptRepo.save(existingAppointment);
+    }
+
+
+    public boolean cancelAppointment(int id){
+        Optional<Appointment> appointment=  aptRepo.findById(id);
+        if(appointment.isPresent()){
+            aptRepo.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 }
 

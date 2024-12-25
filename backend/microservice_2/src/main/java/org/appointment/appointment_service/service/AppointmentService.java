@@ -5,6 +5,8 @@ import org.appointment.appointment_service.data.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,12 +29,26 @@ public class AppointmentService {
         return aptRepo.findByDate(date);
     }
 
+    public Appointment getAppointmentById(int id){
+        Optional<Appointment> appointment=  aptRepo.findById(id);
+        if(appointment.isPresent()){
+            return appointment.get();
+        }
+        return null;
+    }
+
     public Appointment getAppointmentByPatient(int id){
         Optional<Appointment> appointment=  aptRepo.findById(id);
         if(appointment.isPresent()){
             return appointment.get();
         }
         return null;
+    }
+
+    public List<Appointment> getUpcomingAppointments() {
+        // Get today's date
+        LocalDate today = LocalDate.now();
+        return aptRepo.findByAppointmentDateAfter(today);
     }
 
     public Appointment updateAppointmentDetails(int aptId, Appointment apt){
@@ -66,6 +82,8 @@ public class AppointmentService {
         }
         return false;
     }
+
+
 
 }
 

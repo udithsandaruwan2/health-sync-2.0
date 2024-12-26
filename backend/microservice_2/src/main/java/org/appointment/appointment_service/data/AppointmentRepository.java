@@ -15,8 +15,19 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     /*@Query("select a from Appointment a where a.date=?1")
     public List<Appointment> findByDate(String date);*/
 
+    //Validate appointment to prevent duplicate bookings
+    @Query("SELECT COUNT(a) > 0 FROM Appointment a WHERE a.docId = :docId " +
+            "AND a.date BETWEEN :startTime AND :endTime")
+    public boolean validateAppointment(@Param("docId") int docId,
+                                       @Param("startTime") LocalDateTime startTime,
+                                       @Param("endTime") LocalDateTime endTime);
+
+
+
     @Query("SELECT a FROM Appointment a WHERE CAST(a.date AS date) = :date")
     List<Appointment> findByDate(@Param("date") LocalDate date);
+
+
 
     @Query("SELECT a FROM Appointment a WHERE CAST(a.date as date) > ?1")
     List<Appointment> findByAppointmentDateAfter(LocalDate date);

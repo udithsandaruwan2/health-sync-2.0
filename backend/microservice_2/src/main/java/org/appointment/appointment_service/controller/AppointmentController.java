@@ -80,7 +80,7 @@ public class AppointmentController {
 
     //Filter appointments by status
     @GetMapping(path = "/appointments/status/{status}")
-    public List<Appointment> getAppointmentsByStatus(@PathVariable String status) {
+    public List<Appointment> getAppointmentsByStatus(@PathVariable String status) { //Why path variable instead of query param ? Because we only have 3 status types
         return aptService.getAppointmentsByStatus(status);
     }
 

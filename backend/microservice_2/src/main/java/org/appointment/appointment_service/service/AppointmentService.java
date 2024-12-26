@@ -25,7 +25,7 @@ public class AppointmentService {
         return aptRepo.findAll();// to get the list of Appointments
     }
 
-    public List<Appointment> getAppointmentByDate(String date){
+    public List<Appointment> getAppointmentByDate(LocalDate date){
         return aptRepo.findByDate(date);
     }
 
@@ -48,19 +48,16 @@ public class AppointmentService {
     public List<Appointment> getUpcomingAppointments() {
         // Get today's date as a String
         LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Adjust format as needed
-        String todayAsString = today.format(formatter);
 
-        return aptRepo.findByAppointmentDateAfter(todayAsString);
+        return aptRepo.findByAppointmentDateAfter(today);
     }
 
 
     public List<Appointment> getTodaysAppointments() {
         // Get today's date
         LocalDate today = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Adjust format as needed
-        String todayAsString = today.format(formatter);
-        return aptRepo.findAppointmentsByDate(todayAsString);
+
+        return aptRepo.findAppointmentsByDate(today);
     }
 
     public Appointment updateAppointmentDetails(int aptId, Appointment apt){

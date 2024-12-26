@@ -12,14 +12,17 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
-    @Query("select a from Appointment a where a.date=?1")
-    public List<Appointment> findByDate(String date);
+    /*@Query("select a from Appointment a where a.date=?1")
+    public List<Appointment> findByDate(String date);*/
 
-    @Query("SELECT a FROM Appointment a WHERE a.date > ?1")
-    List<Appointment> findByAppointmentDateAfter(String date);
+    @Query("SELECT a FROM Appointment a WHERE CAST(a.date AS date) = :date")
+    List<Appointment> findByDate(@Param("date") LocalDate date);
 
-    @Query("select a from Appointment a where a.date = ?1")
-    public List<Appointment> findAppointmentsByDate(String date);
+    @Query("SELECT a FROM Appointment a WHERE CAST(a.date as date) > ?1")
+    List<Appointment> findByAppointmentDateAfter(LocalDate date);
+
+    @Query("select a from Appointment a where CAST(a.date AS date) = ?1")
+    public List<Appointment> findAppointmentsByDate(LocalDate date);
 
     @Query("SELECT a FROM Appointment a WHERE a.status = ?1")
     public List<Appointment> findByStatus(String status);

@@ -5,6 +5,8 @@ import org.appointment.appointment_service.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +31,14 @@ public class AppointmentController {
     //Retrieve appointment details for a given date
     @GetMapping(path = "/appointments", params = "date")
     public List<Appointment> getAppointmentByDate(@RequestParam String date){
-        return aptService.getAppointmentByDate(date);
+
+        // Define the expected date format (yyyy-MM-dd) as we now use local date
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // Convert the String date to LocalDate (ignoring the time part)
+        LocalDate localDate = LocalDate.parse(date, formatter);
+
+        return aptService.getAppointmentByDate(localDate);
     }
 
     //Retrieve details for a given appointment

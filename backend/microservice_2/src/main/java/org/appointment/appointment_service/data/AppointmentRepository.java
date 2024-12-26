@@ -15,12 +15,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("select a from Appointment a where a.date=?1")
     public List<Appointment> findByDate(String date);
 
-    /*@Query("SELECT a FROM Appointment a WHERE a.appointmentDate > ?1")
-    List<Appointment> findByAppointmentDateAfter(LocalDate date);*/
+    @Query("SELECT a FROM Appointment a WHERE a.date > ?1")
+    List<Appointment> findByAppointmentDateAfter(String date);
 
+    @Query("select a from Appointment a where a.date = ?1")
+    public List<Appointment> findAppointmentsByDate(String date);
 
-    /*@Query("select a from Appointment a where a.date = :date")
-    public List<Appointment> findAppointmentsByDate(@Param("date") LocalDate date);*/
     @Query("SELECT a FROM Appointment a WHERE a.status = ?1")
     public List<Appointment> findByStatus(String status);
 

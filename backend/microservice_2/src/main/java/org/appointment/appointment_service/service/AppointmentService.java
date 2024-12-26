@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -44,17 +45,23 @@ public class AppointmentService {
         return null;
     }
 
-    /*public List<Appointment> getUpcomingAppointments() {
-        // Get today's date
+    public List<Appointment> getUpcomingAppointments() {
+        // Get today's date as a String
         LocalDate today = LocalDate.now();
-        return aptRepo.findByAppointmentDateAfter(today);
-    }*/
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Adjust format as needed
+        String todayAsString = today.format(formatter);
 
-    /*public List<Appointment> getTodaysAppointments() {
+        return aptRepo.findByAppointmentDateAfter(todayAsString);
+    }
+
+
+    public List<Appointment> getTodaysAppointments() {
         // Get today's date
         LocalDate today = LocalDate.now();
-        return aptRepo.findAppointmentsByDate(today);
-    }*/
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Adjust format as needed
+        String todayAsString = today.format(formatter);
+        return aptRepo.findAppointmentsByDate(todayAsString);
+    }
 
     public Appointment updateAppointmentDetails(int aptId, Appointment apt){
         Appointment existingAppointment = aptRepo.findById(aptId)

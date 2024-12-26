@@ -40,18 +40,16 @@ public class AppointmentController {
 
 
     //Retrieve all upcoming appointments (filtered using data (localdate))
-    /*@GetMapping(path = "/appointments/upcoming")
+    @GetMapping(path = "/appointments/upcoming")
     public List<Appointment> getUpcomingAppointments() {
         return aptService.getUpcomingAppointments();
-    }*/
+    }
 
     // Retrieve appointment scheduled for today
-    /*@GetMapping(path = "/appointments/today")
+    @GetMapping(path = "/appointments/today")
     public List<Appointment> getTodaysAppointments() {
         return aptService.getTodaysAppointments();
-    }*/
-
-
+    }
 
     //Update appointment details(reason)
     @PutMapping(path = "/appointments/{appointmentId}")

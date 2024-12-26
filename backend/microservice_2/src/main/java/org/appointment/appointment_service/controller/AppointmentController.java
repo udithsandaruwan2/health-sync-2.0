@@ -82,6 +82,19 @@ public class AppointmentController {
         return aptService.getAppointmentAnalytics();
     }
 
+    /*The one who developing patient microservice is responsible to implement a end point in their microservice and call this end point via a rest client
+    * According Spring conventions*/
 
+    //Retrieve all appointments related to a specific patient
+    @GetMapping("/patients/{patientId}/appointments")
+    public List<Appointment> getAppointmentsByUserId(@PathVariable int patientId) {
+        return aptService.findByPatientId(patientId);
+    }
+
+    //Retrieve all appointments related to a specific doctor
+    @GetMapping("/doctors/{docId}/appointments")
+    public List<Appointment> getAppointmentsByDocId(@PathVariable int docId) {
+        return aptService.findByDoctId(docId);
+    }
 
 }

@@ -101,6 +101,13 @@ public class AppointmentService {
         return analytics;
     }
 
+    public List<Appointment> findByPatientId(int id) {
+        return aptRepo.findByPatientId(id);
+    }
+
+    public List<Appointment> findByDoctId(int id) {
+        return aptRepo.findByDoctId(id);
+    }
 
 }
 

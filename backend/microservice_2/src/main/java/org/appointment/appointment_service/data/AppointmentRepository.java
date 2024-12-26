@@ -27,6 +27,10 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("SELECT COUNT(a) FROM Appointment a WHERE a.status = ?1")
     public int countByStatus(String status);
 
+    @Query("Select a from Appointment a Where a.patientId = ?1")
+    public List<Appointment> findByPatientId(int id);
 
+    @Query("Select a from Appointment a Where a.docId = ?1")
+    public List<Appointment> findByDoctId(int id);
 
 }

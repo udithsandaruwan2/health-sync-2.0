@@ -22,7 +22,7 @@ public class AppointmentService {
         LocalDateTime startTime = apt.getDate();
         LocalDateTime endTime = apt.getDate().plusMinutes(30);
 
-        // Check if there's any appointment for the doctor within the 20-minute window
+        // Check if there's any appointment for the doctor within the 30-minute window
         if(aptRepo.validateAppointment(apt.getDocId(), startTime, endTime)) {
             // Handle conflicting appointment (e.g., throw an exception or return an error)
             throw new RuntimeException("Doctor is already booked within 30 minutes of the requested time.");

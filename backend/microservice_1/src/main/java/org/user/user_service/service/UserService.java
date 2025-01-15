@@ -13,7 +13,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -38,6 +37,19 @@ public class UserService {
         return userRepository.findByRole(role);
     }
 
+    public User loginUser(String email, String password) {
+        List<User> users = userRepository.findByEmail(email);
 
+        if (!users.isEmpty()) {
+            User user = users.get(0);  // Get the first result
+
+            // Check password
+            if (user.getPassword().equals(password)) {
+                return user;  // Successful login
+            }
+        }
+
+        return null;  // Invalid login or user not found
+    }
 
 }

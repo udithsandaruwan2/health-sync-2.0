@@ -1,0 +1,8 @@
+.custom-input {
+    border: 2px solid #000;
+    /* Dark border */
+    border-radius: 5px;
+    /* Rounded corners */
+    padding: 0.5rem;
+    /* Optional: Adjust padding for better spacing */
+}

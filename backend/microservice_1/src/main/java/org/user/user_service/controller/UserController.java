@@ -1,6 +1,7 @@
 package org.user.user_service.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.user.user_service.data.User;
 import org.user.user_service.service.UserService;
@@ -38,11 +39,19 @@ public class UserController {
          userService.deleteUser(id);
      }
 
-//    @GetMapping(path = "/users")
-//    public List<User> getUsersByRole(@RequestParam int role) {
-//        return userService.getUsersByRole(role);
-//    }
+    @GetMapping(path = "/users", params = {"role"})
+    public List<User> getUsersByRole(@RequestParam int role) {
+        return userService.getUsersByRole(role);
+    }
 
-
+    @PostMapping(path = "/auth/login")
+    public ResponseEntity<User> loginUser(@RequestBody User user) {
+        User loggedInUser = userService.loginUser(user.getEmail(), user.getPassword());
+        if (loggedInUser != null) {
+            return ResponseEntity.ok(loggedInUser); // Success response
+        } else {
+            return ResponseEntity.status(401).body(null); // Unauthorized response
+        }
+    }
 
 }

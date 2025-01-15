@@ -10,4 +10,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.role = ?1")
     public List<User> findByRole(int role);
 
+    @Query("SELECT u FROM User u WHERE u.email = ?1")
+    public List<User> findByEmail(String email);
+
+
 }

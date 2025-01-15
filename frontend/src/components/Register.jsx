@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
@@ -113,6 +114,7 @@ function Register() {
                             </Form.Select>
                         </Form.Group>
                         <Button variant="dark" type="submit" className="w-100 rounded">
+
                             Register
                         </Button>
                     </Form>

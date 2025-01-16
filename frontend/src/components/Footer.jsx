@@ -5,7 +5,7 @@ function Footer() {
   return (
     <footer
       style={{
-        position: 'absolute',
+
         bottom: '0',
         width: '100%',
         backgroundColor: '#f8f9fa', // Optional background for visibility

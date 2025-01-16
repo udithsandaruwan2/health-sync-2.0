@@ -1,75 +1,142 @@
-import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-
+import { useState, useEffect } from 'react';
+import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 
 function Appointment() {
+    const [reason, setReason] = useState('');
+    const [date, setDate] = useState('');
+    const [timeSelected, setTimeSelected] = useState('');
+    const [patientId, setPatientId] = useState(null);
+    const [doctorId, setDoctorId] = useState(null);
+    const [message, setMessage] = useState('');
+    const [messageType, setMessageType] = useState('');
+    const [isAppointmentBooked, setIsAppointmentBooked] = useState(false); // State to track appointment status
+    const [isHidden, setIsHidden] = useState(false); // State to control hiding the form
+    const navigate = useNavigate(); // For navigation after booking appointment
+
+    useEffect(() => {
+        // Get patient ID from localStorage
+        const userData = JSON.parse(localStorage.getItem('user'));
+        if (userData) {
+            setPatientId(userData.id);
+        }
+
+        // Get doctor ID from URL (assuming you're using React Router for routing)
+        const url = window.location.pathname;
+        const docId = url.split('/')[2]; // Assuming the URL is something like '/doctors/1/appointments'
+        if (docId) {
+            setDoctorId(docId);
+        }
+    }, []);
+
+    const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Check if the three required fields are filled
+    if (!reason || !date || !timeSelected) {
+        setMessage('Please fill in all the required fields');
+        setMessageType('danger');
+        return;
+    }
+
+    const appointmentData = {
+        patientId: patientId,
+        docId: doctorId,
+        date: date,
+        time_selected: timeSelected,
+        reason: reason,
+        status: 'Pending'
+    };
+
+    try {
+        const response = await axios.post('/service2/api/appointments', appointmentData, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (response.status === 200) {
+            setMessage('Appointment booked successfully');
+            setMessageType('success');
+            setIsAppointmentBooked(true);
+
+            // Add delay to hide form and show the "Back to Home" button
+            setTimeout(() => {
+                setIsHidden(true);
+            }, 1000); // Delay of 1 second
+        } else {
+            setMessage('Failed to book the appointment');
+            setMessageType('danger');
+        }
+    } catch (error) {
+        // Check if the error response exists and extract the error message
+        if (error.response && error.response.data && error.response.data.message) {
+            setMessage(error.response.data.message); // Display error message from API
+        } else {
+            setMessage('Error submitting the form'); // Default error message
+        }
+        setMessageType('danger');
+        console.error('Error:', error);
+    }
+};
+
+
+    // Navigate back to home when "Back to Home" is clicked
+    const handleBackToHome = () => {
+        navigate('/'); // Assuming '/' is the home route
+    };
+
     return (
-        <Container
-            className="d-flex align-items-center justify-content-center"
-            style={{ height: '85vh' }} // Center vertically and horizontally
-        >
+        <Container className="d-flex align-items-center justify-content-center" style={{ height: '81vh' }}>
             <Row className="justify-content-md-center w-100">
                 <Col md={6}>
                     <h2 className="text-center mb-4">Book an Appointment</h2>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicName">
-                            <Form.Label>Full Name</Form.Label>
-                            <Form.Control 
-                                type="text" 
-                                placeholder="Enter your full name" 
-                                className="border border-dark rounded" // Adds a dark border
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicContact">
-                            <Form.Label>Contact Number</Form.Label>
-                            <Form.Control 
-                                type="tel" 
-                                placeholder="Enter your contact number" 
-                                className="border border-dark rounded" // Adds a dark border
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Email Address</Form.Label>
-                            <Form.Control 
-                                type="email" 
-                                placeholder="Enter your email" 
-                                className="border border-dark rounded" // Adds a dark border
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicDate">
-                            <Form.Label>Preferred Date</Form.Label>
-                            <Form.Control 
-                                type="date" 
-                                className="border border-dark rounded" // Adds a dark border
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicTime">
-                            <Form.Label>Preferred Time</Form.Label>
-                            <Form.Control 
-                                type="time" 
-                                className="border border-dark rounded" // Adds a dark border
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formBasicDoctor">
-                            <Form.Label>Select Doctor</Form.Label>
-                            <Form.Control 
-                                as="select" 
-                                className="border border-dark rounded" // Adds a dark border
-                            >
-                                <option>Select a doctor</option>
-                                <option>Dr. John Smith</option>
-                                <option>Dr. Jane Doe</option>
-                                <option>Dr. Emily Davis</option>
-                                <option>Dr. Michael Brown</option>
-                            </Form.Control>
-                        </Form.Group>
-                        <Button
-                            variant="dark"
-                            type="submit"
-                            className="w-100 rounded" // Rounded button
-                        >
-                            Book Appointment
+                    {message && (
+                        <Alert variant={messageType} className="text-center">
+                            {message}
+                        </Alert>
+                    )}
+                    {!isAppointmentBooked && (
+                        <Form onSubmit={handleSubmit} style={{ opacity: isHidden ? 0 : 1, transition: 'opacity 1s ease' }}>
+                            <Form.Group className="mb-3" controlId="formBasicReason">
+                                <Form.Label>Reason</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Enter your reason briefly"
+                                    value={reason}
+                                    onChange={(e) => setReason(e.target.value)}
+                                    className="border border-dark rounded"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicDate">
+                                <Form.Label>Preferred Date</Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
+                                    className="border border-dark rounded"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formBasicTime">
+                                <Form.Label>Preferred Time</Form.Label>
+                                <Form.Control
+                                    type="time"
+                                    value={timeSelected}
+                                    onChange={(e) => setTimeSelected(e.target.value)}
+                                    className="border border-dark rounded"
+                                />
+                            </Form.Group>
+                            <Button variant="dark" type="submit" className="w-100 rounded">
+                                Book Appointment
+                            </Button>
+                        </Form>
+                    )}
+                    {isAppointmentBooked && (
+                        <Button variant="dark" onClick={handleBackToHome} className="w-100 rounded">
+                            Back to Home
                         </Button>
-                    </Form>
+                    )}
                 </Col>
             </Row>
         </Container>

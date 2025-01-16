@@ -5,10 +5,16 @@ import org.appointment.appointment_service.data.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Service
 public class AppointmentService {
@@ -16,14 +22,32 @@ public class AppointmentService {
     @Autowired
     private AppointmentRepository aptRepo;
 
-
     public Appointment setAppointment(Appointment apt) {
 
-        LocalDateTime startTime = apt.getDate();
-        LocalDateTime endTime = apt.getDate().plusMinutes(30);
+        // Get the date and time of the appointment
+        Date aptDate = apt.getDate();
+        String aptTimeSelected = apt.getTime_selected();
 
-        // Check if there's any appointment for the doctor within the 30-minute window
-        if(aptRepo.validateAppointment(apt.getDocId(), startTime, endTime)) {
+        // Combine date and time to get the full appointment time
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date startTime = null;
+        try {
+            // Combine the date and the time
+            startTime = sdf.parse(new SimpleDateFormat("yyyy-MM-dd").format(aptDate) + " " + aptTimeSelected);
+        } catch (ParseException e) {
+            throw new RuntimeException("Error while parsing date and time.", e);
+        }
+
+        // Convert startTime (java.util.Date) to LocalDateTime
+        LocalDateTime startDateTime = startTime.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
+        // Create an end time by adding 30 minutes to the start time
+        LocalDateTime endDateTime = startDateTime.plusMinutes(30);
+
+        // Check if there are any appointments for the doctor within the 30-minute window
+        if (aptRepo.validateAppointment(apt.getDocId(), startDateTime, endDateTime)) {
             // Handle conflicting appointment (e.g., throw an exception or return an error)
             throw new RuntimeException("Doctor is already booked within 30 minutes of the requested time.");
         } else {
@@ -31,6 +55,7 @@ public class AppointmentService {
             return aptRepo.save(apt);
         }
     }
+
 
     public List<Appointment> getAppointment(){
         return aptRepo.findAll();// to get the list of Appointments

@@ -8,7 +8,7 @@ function Doctor({ doctor }) {
         <Card className="my-3 p-3 rounded" style={{ backgroundColor: '#ffffff' }}>
       {/* Link to individual doctor details */}
       <Link to={`/doctors/${doctor.id}`}>
-        <Card.Img src={doctor.image} alt={doctor.name} />
+        <Card.Img src={doctor.image} alt={doctor.name} className='rounded' />
       </Link>
       <Card.Body>
         {/* Link to individual doctor details */}
@@ -30,7 +30,7 @@ function Doctor({ doctor }) {
           <div className="my-3">
             <Rating
               value={doctor.rating} // Assuming doctor has a rating field
-              text={`${doctor.numReviews} reviews`} // Assuming doctor has numReviews field
+              text={`${doctor.num_reviews} reviews`} // Assuming doctor has numReviews field
               color="#f8e825"
             />
           </div>
@@ -38,8 +38,8 @@ function Doctor({ doctor }) {
 
         {/* Consultation fee */}
         <Card.Text as="h3">
-          {doctor.consultationFee
-            ? `$${doctor.consultationFee}`
+          {doctor.consultation_fee
+            ? `LKR ${doctor.consultation_fee}`
             : 'Consultation fee not available'}
         </Card.Text>
       </Card.Body>
@@ -54,8 +54,8 @@ Doctor.propTypes = {
     image: PropTypes.string.isRequired,
     specialization: PropTypes.string.isRequired,
     rating: PropTypes.number.isRequired,  // Rating field
-    numReviews: PropTypes.number.isRequired, // Number of reviews
-    consultationFee: PropTypes.number, // Consultation fee (optional)
+    num_reviews: PropTypes.number.isRequired, // Number of reviews
+    consultation_fee: PropTypes.number, // Consultation fee (optional)
   }).isRequired,
 };
 

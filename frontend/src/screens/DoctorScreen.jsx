@@ -34,7 +34,7 @@ function DoctorScreen() {
       navigate('/login');
     } else {
       // If logged in, pass user details and navigate to appointment page
-      navigate(`/doctors/${doctor._id}/appointments`, { state: { user, doctor } });
+      navigate(`/doctors/${doctor.id}/appointments`, { state: { user, doctor } });
     }
   };
 
@@ -46,7 +46,7 @@ function DoctorScreen() {
     return (
       <div className="text-center">
         <h2>{error}</h2>
-        <Link to="/" className="btn btn-light my-3">Go Back</Link>
+        <Link to="/" className="btn btn-light my-3"> Go Back</Link>
       </div>
     );
   }
@@ -55,19 +55,21 @@ function DoctorScreen() {
     return (
       <div className="not-found text-center">
         <h2>Doctor not found</h2>
-        <Link to="/" className="btn btn-light my-3">Go Back</Link>
+        <Link to="/" className="btn btn-light my-3 rounded">Go Back</Link>
       </div>
     );
   }
 
   return (
     <div>
-      <Link to="/" className="btn btn-light my-3">Go Back</Link>
+      <Link to="/" className="btn btn-light my-3 rounded">Go Back</Link>
       <Row>
         <Col md={6}>
-          <Image src={doctor.image} alt={doctor.name} fluid />
+          <Card className='my-3 rounded'><Image src={doctor.image} alt={doctor.name} fluid className='rounded'/></Card>
+          
         </Col>
         <Col md={3}>
+           <Card className='my-3 p-3 rounded'>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h3>{doctor.name}</h3>
@@ -85,10 +87,11 @@ function DoctorScreen() {
             <ListGroup.Item>
               Description: {doctor.description || 'No description available'}
             </ListGroup.Item>
-          </ListGroup>
+            </ListGroup>
+            </Card>
         </Col>
         <Col md={3}>
-          <Card>
+          <Card className='my-3 p-3 rounded'>
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <Row>
@@ -108,7 +111,7 @@ function DoctorScreen() {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button
-                  className="w-100"
+                  className="w-100 rounded"
                   type="button"
                   disabled={doctor.countInStock === 0}
                   onClick={handleBookAppointment}

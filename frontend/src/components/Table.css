@@ -1,0 +1,10 @@
+/* Center align all table cells */
+.custom-table th,
+.custom-table td {
+    text-align: center;
+}
+
+/* Additional styling for centering content in the delete button column */
+.custom-table .item-center {
+    text-align: center;
+}

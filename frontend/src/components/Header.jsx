@@ -1,12 +1,12 @@
-
 import { useState, useEffect } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 
 function Header() {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     // Check if user data exists in localStorage whenever the component is mounted or updated
@@ -20,21 +20,14 @@ function Header() {
     // Clear localStorage and reset user state
     localStorage.removeItem('user');
     setUser(null); // Reset user state
-    window.location.href = '/login'; // Redirect to login page
+    navigate('/login'); // Redirect to login page using React Router
   };
 
   return (
-    <Navbar
-      style={{ backgroundColor: '#ffffff' }}
-      expand="lg"
-      className="bg-body-black"
-    >
+    <Navbar style={{ backgroundColor: '#ffffff' }} expand="lg" className="bg-body-black">
       <Container fluid>
         {/* Add logo and brand name */}
-        <Link
-          to="/"
-          style={{ textDecoration: 'none', color: '#000000' }}
-        >
+        <Link to="/" style={{ textDecoration: 'none', color: '#000000' }}>
           <Navbar.Brand href="#" style={{ color: '#000000', marginLeft: '30px' }}>
             <img
               src="/logo.png" // Adjust the path if the file is in a different location
@@ -46,11 +39,7 @@ function Header() {
         </Link>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav
-            className="ms-auto my-2 my-lg-0 d-flex align-items-center" // Use flexbox to align items
-            style={{ maxHeight: '100px' }}
-            navbarScroll
-          >
+          <Nav className="ms-auto my-2 my-lg-0 d-flex align-items-center" style={{ maxHeight: '100px' }} navbarScroll>
             {/* Home Link */}
             <Nav.Link>
               <Link
@@ -65,9 +54,14 @@ function Header() {
               // If user is authenticated, show the username and logout option
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Nav.Link style={{ marginRight: '10px' }}>
-                  <span style={{ color: '#000000', fontWeight: 'bold' }}>
-                    Hello, {user.name}
-                  </span> {/* Display user's name */}
+                  <Link
+                    to={`/users/${user.id}/dashboard`} // Use `user.id` instead of `storedUser.id`
+                    style={{ textDecoration: 'none', color: '#000000' }}
+                  >
+                    <span style={{ color: '#000000', fontWeight: 'bold' }}>
+                      Hello, {user.name}
+                    </span> {/* Display user's name */}
+                  </Link>
                 </Nav.Link>
                 <Nav.Link>
                   <button
@@ -91,10 +85,7 @@ function Header() {
               // If user is not authenticated, show login and register links
               <>
                 <Nav.Link style={{ marginRight: '20px' }}>
-                  <Link
-                    to="/login"
-                    style={{ textDecoration: 'none', color: '#000000' }}
-                  >
+                  <Link to="/login" style={{ textDecoration: 'none', color: '#000000' }}>
                     <i className="fas fa-sign-in-alt"></i> Login
                   </Link>
                 </Nav.Link>

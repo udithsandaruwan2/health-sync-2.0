@@ -1,9 +1,10 @@
 package org.appointment.appointment_service.data;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "Appointment")
@@ -21,14 +22,16 @@ public class Appointment {
     private int docId;
 
     @Column(name = "Apt_Date")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")   // Custom date format
-    private LocalDateTime date;
+    private Date date;
 
     @Column(name = "Apt_Reason")
     private String reason;
 
     @Column(name = "Apt_Status")
     private String status;
+
+    @Column(name = "Apt_Time_Selected")
+    private String time_selected;
 
     public int getId() {
         return id;
@@ -54,11 +57,11 @@ public class Appointment {
         this.docId = docId;
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -76,5 +79,13 @@ public class Appointment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getTime_selected() {
+        return time_selected;
+    }
+
+    public void setTime_selected(String time_selected) {
+        this.time_selected = time_selected;
     }
 }

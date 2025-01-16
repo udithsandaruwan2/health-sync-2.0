@@ -23,48 +23,48 @@ public class AppointmentController {
     }
 
     //Retrieve all appointments
-    @GetMapping(path = "/appointments")
-    public List<Appointment> getAppointment(){
-        return aptService.getAppointment();
-    }
+//    @GetMapping(path = "/appointments")
+//    public List<Appointment> getAppointment(){
+//        return aptService.getAppointment();
+//    }
 
     //Retrieve appointment details for a given date
-    @GetMapping(path = "/appointments", params = "date")
-    public List<Appointment> getAppointmentByDate(@RequestParam String date){
-
-        // Define the expected date format (yyyy-MM-dd) as we now use local date
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        // Convert the String date to LocalDate (ignoring the time part)
-        LocalDate localDate = LocalDate.parse(date, formatter);
-
-        return aptService.getAppointmentByDate(localDate);
-    }
+//    @GetMapping(path = "/appointments", params = "date")
+//    public List<Appointment> getAppointmentByDate(@RequestParam String date){
+//
+//        // Define the expected date format (yyyy-MM-dd) as we now use local date
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//
+//        // Convert the String date to LocalDate (ignoring the time part)
+//        LocalDate localDate = LocalDate.parse(date, formatter);
+//
+//        return aptService.getAppointmentByDate(localDate);
+//    }
 
     //Retrieve details for a given appointment
-    @GetMapping(path = "/appointments/{appointmentId}")
-    public Appointment getAppointmentById(@PathVariable int appointmentId) {
-        return aptService.getAppointmentById(appointmentId);
-    }
+//    @GetMapping(path = "/appointments/{appointmentId}")
+//    public Appointment getAppointmentById(@PathVariable int appointmentId) {
+//        return aptService.getAppointmentById(appointmentId);
+//    }
 
 
     //Retrieve all upcoming appointments (filtered using data (localdate))
-    @GetMapping(path = "/appointments/upcoming")
-    public List<Appointment> getUpcomingAppointments() {
-        return aptService.getUpcomingAppointments();
-    }
+//    @GetMapping(path = "/appointments/upcoming")
+//    public List<Appointment> getUpcomingAppointments() {
+//        return aptService.getUpcomingAppointments();
+//    }
 
     // Retrieve appointment scheduled for today
-    @GetMapping(path = "/appointments/today")
-    public List<Appointment> getTodaysAppointments() {
-        return aptService.getTodaysAppointments();
-    }
+//    @GetMapping(path = "/appointments/today")
+//    public List<Appointment> getTodaysAppointments() {
+//        return aptService.getTodaysAppointments();
+//    }
 
     //Update appointment details(reason)
-    @PutMapping(path = "/appointments/{appointmentId}")
-    public Appointment updateAppointmentDetails(@PathVariable int appointmentId, @RequestBody Appointment updatedAppointment) {
-        return aptService.updateAppointmentDetails(appointmentId, updatedAppointment);
-    }
+//    @PutMapping(path = "/appointments/{appointmentId}")
+//    public Appointment updateAppointmentDetails(@PathVariable int appointmentId, @RequestBody Appointment updatedAppointment) {
+//        return aptService.updateAppointmentDetails(appointmentId, updatedAppointment);
+//    }
 
     //update status of the appointment
     @PutMapping(path = "appointments/{id}/status")
@@ -84,10 +84,10 @@ public class AppointmentController {
         return aptService.getAppointmentsByStatus(status);
     }
 
-    @GetMapping(path = "/analytics")
-    public Map<String, Object> getAppointmentAnalytics() {
-        return aptService.getAppointmentAnalytics();
-    }
+//    @GetMapping(path = "/analytics")
+//    public Map<String, Object> getAppointmentAnalytics() {
+//        return aptService.getAppointmentAnalytics();
+//    }
 
     /*The one who developing patient microservice is responsible to implement a end point in their microservice and call this end point via a rest client
     * According Spring conventions*/

@@ -5,7 +5,6 @@ import org.prescription.prescription_service.data.PrescriptionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,6 @@ public class PrescriptionService {
     @Autowired
     private PrescriptionRepository prescriptionRepository;
 
-    // Create a Prescription
     public Prescription createPrescription(Prescription prescription) {
         return prescriptionRepository.save(prescription);
     }
@@ -29,10 +27,8 @@ public class PrescriptionService {
 
     // Retrieve Prescription by ID
     public Prescription getPrescriptionById(int id) {
-//        return prescriptionRepository.findById(id).orElse(null);
-
-        Optional<Prescription> prescription=  prescriptionRepository.findById(id);
-        if(prescription.isPresent()){
+        Optional<Prescription> prescription = prescriptionRepository.findById(id);
+        if (prescription.isPresent()) {
             return prescription.get();
         }
         return null;
@@ -46,11 +42,6 @@ public class PrescriptionService {
     // Retrieve Prescriptions by Doctor ID
     public List<Prescription> getPrescriptionsByDoctorId(int doctorId) {
         return prescriptionRepository.findByDoctorId(doctorId);
-    }
-
-    // Retrieve Prescriptions by Date
-    public List<Prescription> getPrescriptionsByDate(LocalDate date) {
-        return prescriptionRepository.findByDate(date);
     }
 
     // Update Prescription Details
@@ -84,5 +75,10 @@ public class PrescriptionService {
         analytics.put("totalPrescriptions", prescriptionRepository.count());
         analytics.put("mostPrescribedMedicine", prescriptionRepository.findMostPrescribedMedicine());
         return analytics;
+    }
+
+    // Retrieve Prescriptions by Appointment ID
+    public List<Prescription> getPrescriptionsByAppointmentId(int appointmentId) {
+        return prescriptionRepository.findByAppointmentId(appointmentId);
     }
 }

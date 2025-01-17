@@ -4,6 +4,32 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link, useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 
+/**
+ * Header component that displays the navigation bar with links and user authentication status.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <Header />
+ * )
+ * 
+ * @returns {JSX.Element} The rendered Header component.
+ * 
+ * @description
+ * This component renders a navigation bar with a logo, brand name, and navigation links.
+ * It checks for user authentication status from localStorage and displays appropriate links
+ * based on whether the user is logged in or not. If the user is logged in, it shows the user's
+ * name and a logout button. If the user is not logged in, it shows login and register links.
+ * 
+ * @function
+ * @name Header
+ * 
+ * @requires useState - React hook to manage user state.
+ * @requires useEffect - React hook to perform side effects.
+ * @requires useNavigate - React Router hook for navigation.
+ * @requires Link - React Router component for navigation links.
+ * @requires Navbar, Container, Nav - React Bootstrap components for styling the navigation bar.
+ */
 function Header() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate(); // For navigation

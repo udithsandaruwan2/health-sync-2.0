@@ -2,49 +2,66 @@ package org.user.user_service.data;
 
 import jakarta.persistence.*;
 
+/**
+ * User class represents the user entity in the database.
+ * This class is mapped to the "user" table and contains user details such as username, email, role, etc.
+ */
 @Entity
 @Table(name = "user")
 public class User {
 
+    // Primary key for the user entity with auto-incrementing value
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "_id")
     private int id;
 
+    // Username of the user
     @Column(name = "username")
     private String username;
 
+    // Password of the user
     @Column(name = "password")
     private String password;
 
+    // Email address of the user
     @Column(name = "email")
     private String email;
 
+    // Role of the user (e.g., admin, user, etc.)
     @Column(name = "role")
     private int role;
 
+    // Name of the user
     @Column(name = "name")
     private String name;
 
+    // Specialization field (useful for specific user types like doctors)
     @Column(name = "specialization")
     private String specialization;
 
+    // Description of the user (bio, profession, etc.)
     @Column(name = "description")
     private String description;
 
+    // Rating of the user (e.g., user rating, doctor rating)
     @Column(name = "rating")
     private Float rating;
 
+    // Number of reviews for the user
     @Column(name = "num_reviews")
     private Integer num_reviews;
 
+    // Consultation fee (for service providers like doctors)
     @Column(name = "consultation_fee")
     private Double consultation_fee;
 
+    // Path or URL to the user's profile image
     @Column(name = "image")
     private String image;
 
-    // Getters and Setters
+    // Getters and setters for each field
+
     public int getId() {
         return id;
     }

@@ -5,34 +5,35 @@ function AcceptConfirm() {
   const navigate = useNavigate(); // Hook to navigate between pages
   const { id } = useParams(); // Get the dynamic ID from the route
 
+  // Function to handle the cancel action
   const handleCancel = () => {
     navigate(-1); // Navigate back to the previous page without accepting
   };
 
+  // Function to handle the accept action
   const handleAccept = async () => {
-  try {
-    const response = await fetch(`/service2/api/appointments/${id}/status`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ status: 'Accept' }),
-    });
+    try {
+      const response = await fetch(`/service2/api/appointments/${id}/status`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: 'Accept' }), // Update status to 'Accept'
+      });
 
-    if (response.ok) {
-      // Notify success and refresh appointments
-      alert('Appointment accepted successfully.');
-      navigate(`/users/${id}/dashboard`); // Navigate back to dashboard
-    } else {
-      const errorData = await response.json();
-      console.error('Failed to update status:', errorData);
-      alert('Failed to accept the request. Please try again.');
+      if (response.ok) {
+        // Notify success and navigate back to the previous page
+        navigate(-1); // Navigate back to dashboard
+      } else {
+        const errorData = await response.json();
+        console.error('Failed to update status:', errorData);
+        alert('Failed to accept the request. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error while updating appointment status:', error);
+      alert('An error occurred. Please try again later.');
     }
-  } catch (error) {
-    console.error('Error while updating appointment status:', error);
-    alert('An error occurred. Please try again later.');
-  }
-};
+  };
 
   return (
     <Container>

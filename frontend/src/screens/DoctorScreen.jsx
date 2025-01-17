@@ -5,12 +5,12 @@ import axios from 'axios';
 import Rating from '../components/Rating';
 
 function DoctorScreen() {
-  const { id } = useParams(); // Access the dynamic route parameter
-  const [doctor, setDoctor] = useState(null); // State for doctor data
-  const [loading, setLoading] = useState(true); // State for loading
-  const [error, setError] = useState(null); // State for error handling
-  const navigate = useNavigate(); // Hook to handle navigation
-  const user = JSON.parse(localStorage.getItem('user')); // Check if user is logged in
+  const { id } = useParams();
+  const [doctor, setDoctor] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     const fetchDoctor = async () => {
@@ -30,10 +30,8 @@ function DoctorScreen() {
 
   const handleBookAppointment = () => {
     if (!user) {
-      // If not logged in, redirect to login page
       navigate('/login');
     } else {
-      // If logged in, pass user details and navigate to appointment page
       navigate(`/doctors/${doctor.id}/appointments`, { state: { user, doctor } });
     }
   };
@@ -65,30 +63,31 @@ function DoctorScreen() {
       <Link to="/" className="btn btn-light my-3 rounded">Go Back</Link>
       <Row>
         <Col md={6}>
-          <Card className='my-3 rounded'><Image src={doctor.image} alt={doctor.name} fluid className='rounded'/></Card>
-          
+          <Card className='my-3 rounded'>
+            <Image src={doctor.image} alt={doctor.name} fluid className='rounded'/>
+          </Card>
         </Col>
         <Col md={3}>
-           <Card className='my-3 p-3 rounded'>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h3>{doctor.name}</h3>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <Rating
-                value={doctor.rating || 0}
-                text={`${doctor.numReviews || 0} reviews`}
-                color="#f8e825"
-              />
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Specialty: {doctor.specialization || 'Not specified'}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Description: {doctor.description || 'No description available'}
-            </ListGroup.Item>
+          <Card className='my-3 p-3 rounded'>
+            <ListGroup variant="flush">
+              <ListGroup.Item>
+                <h3>{doctor.name}</h3>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Rating
+                  value={doctor.rating || 0}
+                  text={`${doctor.numReviews || 0} reviews`}
+                  color="#f8e825"
+                />
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Specialty: {doctor.specialization || 'Not specified'}
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Description: {doctor.description || 'No description available'}
+              </ListGroup.Item>
             </ListGroup>
-            </Card>
+          </Card>
         </Col>
         <Col md={3}>
           <Card className='my-3 p-3 rounded'>

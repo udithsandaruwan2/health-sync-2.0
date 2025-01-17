@@ -4,7 +4,6 @@ function Rating({ value, text, color }) {
   return (
     <div className='rating'>
       <span>
-        {/* Render stars based on the rating value */}
         <i
           style={{ color }}
           className={
@@ -68,7 +67,7 @@ Rating.propTypes = {
 };
 
 Rating.defaultProps = {
-  color: '#f8e825', // Default gold color
+  color: '#f8e825',
 };
 
 export default Rating;

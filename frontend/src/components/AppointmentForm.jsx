@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
 
 function Appointment() {
+    // State variables for form fields and messages
     const [reason, setReason] = useState('');
     const [date, setDate] = useState('');
     const [timeSelected, setTimeSelected] = useState('');
@@ -15,14 +16,13 @@ function Appointment() {
     const [isHidden, setIsHidden] = useState(false); // State to control hiding the form
     const navigate = useNavigate(); // For navigation after booking appointment
 
+    // useEffect to get patient ID from localStorage and doctor ID from URL
     useEffect(() => {
-        // Get patient ID from localStorage
         const userData = JSON.parse(localStorage.getItem('user'));
         if (userData) {
             setPatientId(userData.id);
         }
 
-        // Get doctor ID from URL (assuming you're using React Router for routing)
         const url = window.location.pathname;
         const docId = url.split('/')[2]; // Assuming the URL is something like '/doctors/1/appointments'
         if (docId) {
@@ -30,57 +30,57 @@ function Appointment() {
         }
     }, []);
 
+    // Handle form submission
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    // Check if the three required fields are filled
-    if (!reason || !date || !timeSelected) {
-        setMessage('Please fill in all the required fields');
-        setMessageType('danger');
-        return;
-    }
-
-    const appointmentData = {
-        patientId: patientId,
-        docId: doctorId,
-        date: date,
-        time_selected: timeSelected,
-        reason: reason,
-        status: 'Pending'
-    };
-
-    try {
-        const response = await axios.post('/service2/api/appointments', appointmentData, {
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
-
-        if (response.status === 200) {
-            setMessage('Appointment booked successfully');
-            setMessageType('success');
-            setIsAppointmentBooked(true);
-
-            // Add delay to hide form and show the "Back to Home" button
-            setTimeout(() => {
-                setIsHidden(true);
-            }, 1000); // Delay of 1 second
-        } else {
-            setMessage('Failed to book the appointment');
+        // Check if the required fields are filled
+        if (!reason || !date || !timeSelected) {
+            setMessage('Please fill in all the required fields');
             setMessageType('danger');
+            return;
         }
-    } catch (error) {
-        // Check if the error response exists and extract the error message
-        if (error.response && error.response.data && error.response.data.message) {
-            setMessage(error.response.data.message); // Display error message from API
-        } else {
-            setMessage('Error submitting the form'); // Default error message
-        }
-        setMessageType('danger');
-        console.error('Error:', error);
-    }
-};
 
+        const appointmentData = {
+            patientId: patientId,
+            docId: doctorId,
+            date: date,
+            time_selected: timeSelected,
+            reason: reason,
+            status: 'Pending'
+        };
+
+        try {
+            const response = await axios.post('/service2/api/appointments', appointmentData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.status === 200) {
+                setMessage('Appointment booked successfully');
+                setMessageType('success');
+                setIsAppointmentBooked(true);
+
+                // Add delay to hide form and show the "Back to Home" button
+                setTimeout(() => {
+                    setIsHidden(true);
+                }, 1000); // Delay of 1 second
+            } else {
+                setMessage('Failed to book the appointment');
+                setMessageType('danger');
+            }
+        } catch (error) {
+            // Check if the error response exists and extract the error message
+            if (error.response && error.response.data && error.response.data.message) {
+                setMessage(error.response.data.message); // Display error message from API
+            } else {
+                setMessage('Error submitting the form'); // Default error message
+            }
+            setMessageType('danger');
+            console.error('Error:', error);
+        }
+    };
 
     // Navigate back to home when "Back to Home" is clicked
     const handleBackToHome = () => {

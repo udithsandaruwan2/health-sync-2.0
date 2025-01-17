@@ -47,4 +47,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
     @Query("Select a from Appointment a Where a.docId = ?1")
     public List<Appointment> findByDoctId(int id);
 
+    @Query("SELECT a FROM Appointment a WHERE a.status = ?1 AND a.docId = ?2")
+    public List<Appointment> findByStatusAndDoctorId(String status, int doctorId);
+
+    @Query("SELECT a FROM Appointment a WHERE a.status = ?1 AND a.patientId = ?2")
+    public List<Appointment> findByStatusAndPatientId(String status, int patientId);
+
+
+
 }

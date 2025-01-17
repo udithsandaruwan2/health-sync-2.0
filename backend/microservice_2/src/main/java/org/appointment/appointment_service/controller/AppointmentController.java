@@ -78,11 +78,18 @@ public class AppointmentController {
         return aptService.cancelAppointment(appointmentId);
     }
 
-    //Filter appointments by status
-    @GetMapping(path = "/appointments/status/{status}")
-    public List<Appointment> getAppointmentsByStatus(@PathVariable String status) { //Why path variable instead of query param ? Because we only have 3 status types
-        return aptService.getAppointmentsByStatus(status);
+    //Filter appointments by status For Patients
+    @GetMapping(path = "/appointments/status/{status}/patients/{patientId}")
+    public List<Appointment> getAppointmentsByStatusAndPatientId(@PathVariable String status, @PathVariable int patientId) {
+        return aptService.getAppointmentsByStatusAndPatientId(status, patientId);
     }
+
+    //Filter appointments by status For Doctor
+    @GetMapping(path = "/appointments/status/{status}/doctors/{doctorId}")
+    public List<Appointment> getAppointmentsByStatusAndDoctorId(@PathVariable String status, @PathVariable int doctorId) {
+        return aptService.getAppointmentsByStatusAndDoctorId(status, doctorId);
+    }
+
 
 //    @GetMapping(path = "/analytics")
 //    public Map<String, Object> getAppointmentAnalytics() {

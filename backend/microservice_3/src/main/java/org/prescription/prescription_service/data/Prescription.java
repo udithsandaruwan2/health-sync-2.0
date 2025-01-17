@@ -1,10 +1,6 @@
 package org.prescription.prescription_service.data;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "prescription_table")
@@ -16,14 +12,10 @@ public class Prescription {
     private int id;
 
     @Column(name = "patientID")
-    private int pID;
+    private int patientId;
 
     @Column(name = "doctorID")
-    private int dID;
-
-    @Column(name = "date")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime dateTime;
+    private int doctorId;
 
     @Column(name = "description")
     private String description;
@@ -31,6 +23,10 @@ public class Prescription {
     @Column(name = "medicine")
     private String medicine;
 
+    @Column(name = "app_id")
+    private int appointmentId;
+
+    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -39,28 +35,20 @@ public class Prescription {
         this.id = id;
     }
 
-    public int getpID() {
-        return pID;
+    public int getPatientId() {
+        return patientId;
     }
 
-    public void setpID(int pID) {
-        this.pID = pID;
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
     }
 
-    public int getdID() {
-        return dID;
+    public int getDoctorId() {
+        return doctorId;
     }
 
-    public void setdID(int dID) {
-        this.dID = dID;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
     }
 
     public String getDescription() {
@@ -77,5 +65,13 @@ public class Prescription {
 
     public void setMedicine(String medicine) {
         this.medicine = medicine;
+    }
+
+    public int getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(int appointmentId) {
+        this.appointmentId = appointmentId;
     }
 }

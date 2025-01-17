@@ -1,9 +1,8 @@
-// Profile.js
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import ProfileImage from './ProfileImage'; // Import ProfileImage component
+import ProfileImage from './ProfileImage';
 import './Profile.css';
 
 function Profile() {
@@ -20,16 +19,15 @@ function Profile() {
     });
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
-    const { id } = useParams(); // Get user ID from URL
-    const navigate = useNavigate(); // Initialize navigate
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-    // Load user data from API when the component mounts
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const response = await axios.get(`/service1/api/users/${id}`);
                 if (response.status === 200) {
-                    setUser(response.data); // Update state with API data
+                    setUser(response.data);
                 } else {
                     setMessage('Error loading user data!');
                     setMessageType('danger');
@@ -44,9 +42,8 @@ function Profile() {
         fetchUserData();
     }, [id]);
 
-    // Handle form submission
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
+        e.preventDefault();
 
         try {
             const response = await axios.put(`/service1/api/users`, user);
@@ -65,23 +62,20 @@ function Profile() {
         }
     };
 
-    // Handle input changes
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUser((prevUser) => ({
             ...prevUser,
-            [name]: value, // Update specific user field based on input name
+            [name]: value,
         }));
     };
 
-    // Handle image change (you can expand this to handle image uploads)
     const handleImageChange = () => {
         alert('Image change functionality to be implemented');
     };
 
-    // Handle back button click
     const handleBackClick = () => {
-        navigate(`/users/${id}/dashboard`); // Navigate back to the user's dashboard using the user ID
+        navigate(`/users/${id}/dashboard`);
     };
 
     return (
@@ -89,7 +83,7 @@ function Profile() {
             <Row className="justify-content-md-center w-100">
                 <Col md={6}>
                     <h2 className="text-center mb-4">Profile</h2>
-                    <ProfileImage image={user.image} onImageChange={handleImageChange} /> {/* Add ProfileImage component */}
+                    <ProfileImage image={user.image} onImageChange={handleImageChange} />
                     {message && (
                         <Alert variant={messageType} className="text-center">
                             {message}

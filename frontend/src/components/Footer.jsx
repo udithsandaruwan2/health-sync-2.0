@@ -1,6 +1,21 @@
 
 import { Container, Row, Col } from 'react-bootstrap';
 
+/**
+ * Footer component that renders the footer section of the application.
+ * 
+ * @component
+ * @example
+ * return (
+ *   <Footer />
+ * )
+ * 
+ * @returns {JSX.Element} The rendered footer component.
+ * 
+ * @description
+ * This component renders a footer with a specified style. It includes a container
+ * with a row and a column that displays the copyright information.
+ */
 function Footer() {
   return (
     <footer

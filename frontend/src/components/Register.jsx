@@ -1,19 +1,18 @@
-
 import { useState } from 'react';
 import { Form, Button, Container, Row, Col, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import axios from 'axios'; // Ensure axios is installed
-import './Register.css'; // Optional: Custom styling
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Register.css';
 
 function Register() {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [role, setRole] = useState(1); // Default role: doctor (1)
+    const [role, setRole] = useState(1);
     const [message, setMessage] = useState('');
     const [messageType, setMessageType] = useState('');
-    const navigate = useNavigate(); // Initialize navigate
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,12 +23,7 @@ function Register() {
             return;
         }
 
-        const userData = {
-            username,
-            email,
-            password,
-            role
-        };
+        const userData = { username, email, password, role };
 
         try {
             const response = await axios.post(`/service1/api/users`, userData);
@@ -37,8 +31,6 @@ function Register() {
             if (response.status === 200) {
                 setMessage('Registration successful!');
                 setMessageType('success');
-
-                // Redirect to login page after a short delay
                 setTimeout(() => navigate('/login'), 1000);
             } else {
                 setMessage('There was an issue with the registration.');
@@ -114,7 +106,6 @@ function Register() {
                             </Form.Select>
                         </Form.Group>
                         <Button variant="dark" type="submit" className="w-100 rounded">
-
                             Register
                         </Button>
                     </Form>

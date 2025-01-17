@@ -1,6 +1,5 @@
 package org.prescription.prescription_service.controller;
 
-
 import org.prescription.prescription_service.data.Prescription;
 import org.prescription.prescription_service.service.PrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +14,8 @@ public class PrescriptionController {
     @Autowired
     private PrescriptionService prescriptionService;
 
-    // Create a Prescription
     @PostMapping(path = "/prescriptions")
     public Prescription createPrescription(@RequestBody Prescription prescription) {
-        prescription.setDateTime(java.time.LocalDateTime.now()); // Set the current timestamp
         return prescriptionService.createPrescription(prescription);
     }
 
@@ -45,14 +42,6 @@ public class PrescriptionController {
         return prescriptionService.getPrescriptionsByDoctorId(doctorId);
     }
 
-    // Retrieve Prescription by Appointment Date
-    @GetMapping("/prescriptions/date")
-    public List<Prescription> getPrescriptionsByDate(@RequestParam String date) {
-        java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        java.time.LocalDate localDate = java.time.LocalDate.parse(date, formatter);
-        return prescriptionService.getPrescriptionsByDate(localDate);
-    }
-
     // Update Prescription Details
     @PutMapping("/prescriptions/{prescriptionId}")
     public Prescription updatePrescription(@PathVariable int prescriptionId, @RequestBody Prescription updatedPrescription) {
@@ -76,4 +65,16 @@ public class PrescriptionController {
     public Map<String, Object> getPrescriptionAnalytics() {
         return prescriptionService.getPrescriptionAnalytics();
     }
+
+    // Retrieve prescriptions by Appointment ID
+    @GetMapping("/appointments/{appointmentId}/prescriptions")
+    public List<Prescription> getPrescriptionsByAppointmentId(@PathVariable int appointmentId) {
+        return prescriptionService.getPrescriptionsByAppointmentId(appointmentId);
+    }
+
+//    @GetMapping(path = "/prescriptions", params = {"appointmentId"})
+//    public List<Prescription> getUsersByAppointmentId(@RequestParam int appointmentId) {
+//        return prescriptionService.getPrescriptionsByAppointmentId(appointmentId);
+//    }
+
 }

@@ -5,12 +5,15 @@ function CancelConfirm() {
   const navigate = useNavigate(); // Hook to navigate between pages
   const { id } = useParams(); // Get the dynamic user ID from the route
 
+  // Function to handle the 'Back' button click
   const handleCancel = () => {
     navigate(-1); // Navigate back to the previous page
   };
 
+  // Function to handle the 'Yes, Cancel' button click
   const handleConfirmCancel = async () => {
     try {
+      // Send a request to update the appointment status to 'Cancel'
       const response = await fetch(`/service2/api/appointments/${id}/status`, {
         method: 'PUT', // Assuming it's a PUT request; adjust as per your API
         headers: {
@@ -23,11 +26,13 @@ function CancelConfirm() {
         // Redirect to the dashboard after successful cancellation
         navigate(`/users/${id}/dashboard`);
       } else {
+        // Handle the error response
         const errorData = await response.json();
         console.error('Failed to update status:', errorData);
         alert('Failed to cancel the appointment. Please try again.');
       }
     } catch (error) {
+      // Handle any network or unexpected errors
       console.error('Error while updating appointment status:', error);
       alert('An error occurred. Please try again later.');
     }

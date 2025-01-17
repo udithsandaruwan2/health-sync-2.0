@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
+import { useNavigate } from 'react-router-dom';
 import Table from '../components/Table';
 import Table_2 from '../components/Table_2';
 
 function DashboardScreen() {
   const [role, setRole] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-fetch
+  const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function DashboardScreen() {
   };
 
   const handleRefresh = () => {
-    setRefreshKey((prevKey) => prevKey + 1); // Update the refresh key
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
   return (

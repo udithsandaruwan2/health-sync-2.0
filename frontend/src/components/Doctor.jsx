@@ -3,6 +3,21 @@ import PropTypes from 'prop-types';
 import Rating from './Rating'; // Assuming Rating component exists
 import { Link } from 'react-router-dom';
 
+/**
+ * Doctor component displays the details of a doctor.
+ *
+ * @component
+ * @param {Object} props - The properties object.
+ * @param {Object} props.doctor - The doctor object containing details.
+ * @param {string} props.doctor.id - The unique identifier for the doctor.
+ * @param {string} props.doctor.image - The URL of the doctor's image.
+ * @param {string} props.doctor.name - The name of the doctor.
+ * @param {string} props.doctor.specialization - The specialization of the doctor.
+ * @param {number} props.doctor.rating - The rating of the doctor.
+ * @param {number} props.doctor.num_reviews - The number of reviews for the doctor.
+ * @param {number} [props.doctor.consultation_fee] - The consultation fee of the doctor.
+ * @returns {JSX.Element} The rendered Doctor component.
+ */
 function Doctor({ doctor }) {
   return (
         <Card className="my-3 p-3 rounded" style={{ backgroundColor: '#ffffff' }}>

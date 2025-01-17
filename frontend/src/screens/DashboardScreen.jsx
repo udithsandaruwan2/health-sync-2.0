@@ -5,28 +5,33 @@ import Table_2 from '../components/Table_2';
 
 function DashboardScreen() {
   const [role, setRole] = useState(null);
-  const [userId, setUserId] = useState(null); // To store the user ID for navigation
-  const navigate = useNavigate(); // Initialize navigate
+  const [userId, setUserId] = useState(null);
+  const [refreshKey, setRefreshKey] = useState(0); // State to trigger re-fetch
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Get user details from local storage
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
       const user = JSON.parse(storedUser);
-      setRole(user.role); // Assuming `role` is a property of the user object
-      setUserId(user.id); // Assuming `id` is a property of the user object
+      setRole(user.role);
+      setUserId(user.id);
     }
   }, []);
 
   const handleProfileClick = () => {
     if (userId) {
-      navigate(`/profile/${userId}`); // Navigate to the profile page
+      navigate(`/profile/${userId}`);
     }
-    };
-    const handleHomeClick = () => {
+  };
+
+  const handleHomeClick = () => {
     if (userId) {
-      navigate(`/`); // Navigate to the profile page
+      navigate(`/`);
     }
+  };
+
+  const handleRefresh = () => {
+    setRefreshKey((prevKey) => prevKey + 1); // Update the refresh key
   };
 
   return (
@@ -39,8 +44,8 @@ function DashboardScreen() {
           Go to Profile
         </button>
       </div>
-      {role === 2 && <Table />}
-      {role === 1 && <Table_2 />}
+      {role === 2 && <Table refreshKey={refreshKey} onRefresh={handleRefresh} />}
+      {role === 1 && <Table_2 refreshKey={refreshKey} onRefresh={handleRefresh} />}
       {role === null && <p>Loading...</p>}
     </div>
   );

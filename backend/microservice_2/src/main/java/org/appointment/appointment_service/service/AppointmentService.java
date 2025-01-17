@@ -15,6 +15,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Service
 public class AppointmentService {
@@ -128,9 +129,14 @@ public class AppointmentService {
         return false;
     }
 
-    public List<Appointment> getAppointmentsByStatus(String status) {
-        return aptRepo.findByStatus(status);
+    public List<Appointment> getAppointmentsByStatusAndDoctorId(String status, int doctorId) {
+        return aptRepo.findByStatusAndDoctorId(status, doctorId);
     }
+
+    public List<Appointment> getAppointmentsByStatusAndPatientId(String status, int patientId) {
+        return aptRepo.findByStatusAndPatientId(status, patientId);
+    }
+
 
     // Method for Analytics
     public Map<String, Object> getAppointmentAnalytics() {
@@ -146,8 +152,11 @@ public class AppointmentService {
     }
 
     public List<Appointment> findByDoctId(int id) {
-        return aptRepo.findByDoctId(id);
+        return aptRepo.findByDoctId(id).stream()
+                .filter(appointment -> !"Cancel".equals(appointment.getStatus()))
+                .collect(Collectors.toList());
     }
+
 
 }
 
